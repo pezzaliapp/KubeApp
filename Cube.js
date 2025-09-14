@@ -1,4 +1,8 @@
 // Cube.js (fix “facce nere”, cleanup figli, materiali)
+/*
+© 2025 Alessandro Pezzali. Tutti i diritti riservati.
+Licenza d’Uso — Il Cubo di Rubik PWA
+*/
 import { RoundedBoxGeometry } from './plugins/RoundedBoxGeometry.js';
 import { RoundedPlaneGeometry } from './plugins/RoundedPlaneGeometry.js';
 
