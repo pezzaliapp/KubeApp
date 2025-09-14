@@ -1,4 +1,8 @@
 // Easing.js — versione classica (no modules), espone window.Easing
+/*
+© 2025 Alessandro Pezzali. Tutti i diritti riservati.
+Licenza d’Uso — Il Cubo di Rubik PWA
+*/
 (function () {
   'use strict';
 
