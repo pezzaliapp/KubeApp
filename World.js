@@ -1,93 +1,91 @@
-import { Animation } from './Animation.js';
+// World.js — versione classica (no modules), dipende da window.Animation e THREE
+(function () {
+  'use strict';
 
-class World extends Animation {
+  class World extends window.Animation {
+    constructor(game) {
+      super(true);
 
-	constructor( game ) {
+      this.game = game;
 
-		super( true );
+      this.container = this.game.dom && this.game.dom.game
+        ? this.game.dom.game
+        : document.body;
 
-		this.game = game;
+      this.scene = new THREE.Scene();
 
-		this.container = this.game.dom.game;
-		this.scene = new THREE.Scene();
+      this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+      this.renderer.setPixelRatio(window.devicePixelRatio || 1);
+      this.container.appendChild(this.renderer.domElement);
 
-		this.renderer = new THREE.WebGLRenderer( { antialias: true, alpha: true } );
-		this.renderer.setPixelRatio( window.devicePixelRatio );
-		this.container.appendChild( this.renderer.domElement );
+      // FOV piccolo: lavoriamo con zoom via Transition
+      this.camera = new THREE.PerspectiveCamera(2, 1, 0.1, 10000);
 
-		this.camera = new THREE.PerspectiveCamera( 2, 1, 0.1, 10000 );
+      this.stage = { width: 2, height: 3 };
+      this.fov = 10;
 
-		this.stage = { width: 2, height: 3 };
-		this.fov = 10;
+      this.createLights();
 
-		this.createLights();
+      this.onResize = [];
 
-		this.onResize = [];
+      this.resize();
+      window.addEventListener('resize', () => this.resize(), false);
+    }
 
-		this.resize();
-		window.addEventListener( 'resize', () => this.resize(), false );
+    update() {
+      this.renderer.render(this.scene, this.camera);
+    }
 
-	}
+    resize() {
+      this.width = this.container.offsetWidth || window.innerWidth;
+      this.height = this.container.offsetHeight || window.innerHeight;
 
-	update() {
+      this.renderer.setSize(this.width, this.height);
 
-		this.renderer.render( this.scene, this.camera );
+      this.camera.fov = this.fov;
+      this.camera.aspect = this.width / this.height;
 
-	}
+      const aspect = this.stage.width / this.stage.height;
+      const fovRad = this.fov * THREE.Math.DEG2RAD;
 
-	resize() {
+      let distance = (aspect < this.camera.aspect)
+        ? (this.stage.height / 2) / Math.tan(fovRad / 2)
+        : (this.stage.width / this.camera.aspect) / (2 * Math.tan(fovRad / 2));
 
-		this.width = this.container.offsetWidth;
-		this.height = this.container.offsetHeight;
+      // allontana un filo per margini
+      distance *= 0.5;
 
-		this.renderer.setSize( this.width, this.height );
+      this.camera.position.set(distance, distance, distance);
+      this.camera.lookAt(this.scene.position);
+      this.camera.updateProjectionMatrix();
 
-	  this.camera.fov = this.fov;
-	  this.camera.aspect = this.width / this.height;
+      const docFontSize = (aspect < this.camera.aspect)
+        ? (this.height / 100) * aspect
+        : this.width / 100;
 
-		const aspect = this.stage.width / this.stage.height;
-	  const fovRad = this.fov * THREE.Math.DEG2RAD;
+      document.documentElement.style.fontSize = docFontSize + 'px';
 
-	  let distance = ( aspect < this.camera.aspect )
-			? ( this.stage.height / 2 ) / Math.tan( fovRad / 2 )
-			: ( this.stage.width / this.camera.aspect ) / ( 2 * Math.tan( fovRad / 2 ) );
+      if (Array.isArray(this.onResize)) this.onResize.forEach(cb => cb && cb());
+    }
 
-	  distance *= 0.5;
+    createLights() {
+      this.lights = {
+        holder:  new THREE.Object3D(),
+        ambient: new THREE.AmbientLight(0xffffff, 0.69),
+        front:   new THREE.DirectionalLight(0xffffff, 0.36),
+        back:    new THREE.DirectionalLight(0xffffff, 0.19),
+      };
 
-		this.camera.position.set( distance, distance, distance);
-		this.camera.lookAt( this.scene.position );
-		this.camera.updateProjectionMatrix();
+      this.lights.front.position.set( 1.5,  5,  3);
+      this.lights.back.position.set( -1.5, -5, -3);
 
-		const docFontSize = ( aspect < this.camera.aspect )
-			? ( this.height / 100 ) * aspect
-			: this.width / 100;
+      this.lights.holder.add(this.lights.ambient);
+      this.lights.holder.add(this.lights.front);
+      this.lights.holder.add(this.lights.back);
 
-		document.documentElement.style.fontSize = docFontSize + 'px';
+      this.scene.add(this.lights.holder);
+    }
+  }
 
-		if ( this.onResize ) this.onResize.forEach( cb => cb() );
-
-	}
-
-	createLights() {
-
-		this.lights = {
-			holder:  new THREE.Object3D,
-			ambient: new THREE.AmbientLight( 0xffffff, 0.69 ),
-			front:   new THREE.DirectionalLight( 0xffffff, 0.36 ),
-			back:    new THREE.DirectionalLight( 0xffffff, 0.19 ),
-		};
-
-		this.lights.front.position.set( 1.5, 5, 3 );
-		this.lights.back.position.set( -1.5, -5, -3 );
-
-		this.lights.holder.add( this.lights.ambient );
-		this.lights.holder.add( this.lights.front );
-		this.lights.holder.add( this.lights.back );
-
-		this.scene.add( this.lights.holder );
-
-	}
-
-}
-
-export { World };
+  window.World = World;
+})();
