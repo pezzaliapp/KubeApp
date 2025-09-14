@@ -1,4 +1,8 @@
 // Tween.js — versione classica (no modules), dipende da window.Animation e window.Easing
+/*
+© 2025 Alessandro Pezzali. Tutti i diritti riservati.
+Licenza d’Uso — Il Cubo di Rubik PWA
+*/
 (function () {
   'use strict';
 
