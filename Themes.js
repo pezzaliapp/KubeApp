@@ -1,3 +1,8 @@
+/*
+© 2025 Alessandro Pezzali. Tutti i diritti riservati.
+Licenza d’Uso — Il Cubo di Rubik PWA
+*/
+
 class Themes {
 
   constructor( game ) {
