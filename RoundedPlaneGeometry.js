@@ -1,30 +1,48 @@
-function RoundedPlaneGeometry( size, radius, depth ) {
+// RoundedPlaneGeometry.js — versione classica (no modules), espone window.RoundedPlaneGeometry
+(function () {
+  'use strict';
 
-  var x, y, width, height;
+  function RoundedPlaneGeometry(size, radius, depth) {
+    const THREE_NS = window.THREE;
+    if (!THREE_NS || !THREE_NS.Shape) {
+      throw new Error('THREE non trovato. Carica three.js prima di RoundedPlaneGeometry.js');
+    }
 
-  x = y = - size / 2;
-  width = height = size;
-  radius = size * radius;
+    const half = size / 2;
+    const x = -half;
+    const y = -half;
+    const width = size;
+    const height = size;
 
-  const shape = new THREE.Shape();
+    // raggio in unità, clamp a metà lato
+    let r = size * radius;
+    r = Math.max(0, Math.min(r, Math.min(width, height) / 2));
 
-  shape.moveTo( x, y + radius );
-  shape.lineTo( x, y + height - radius );
-  shape.quadraticCurveTo( x, y + height, x + radius, y + height );
-  shape.lineTo( x + width - radius, y + height );
-  shape.quadraticCurveTo( x + width, y + height, x + width, y + height - radius );
-  shape.lineTo( x + width, y + radius );
-  shape.quadraticCurveTo( x + width, y, x + width - radius, y );
-  shape.lineTo( x + radius, y );
-  shape.quadraticCurveTo( x, y, x, y + radius );
+    const shape = new THREE_NS.Shape();
+    shape.moveTo(x, y + r);
+    shape.lineTo(x, y + height - r);
+    shape.quadraticCurveTo(x, y + height, x + r, y + height);
+    shape.lineTo(x + width - r, y + height);
+    shape.quadraticCurveTo(x + width, y + height, x + width, y + height - r);
+    shape.lineTo(x + width, y + r);
+    shape.quadraticCurveTo(x + width, y, x + width - r, y);
+    shape.lineTo(x + r, y);
+    shape.quadraticCurveTo(x, y, x, y + r);
 
-  const geometry = new THREE.ExtrudeBufferGeometry(
-    shape,
-    { depth: depth, bevelEnabled: false, curveSegments: 3 }
-  );
+    const extrudeOpts = { depth: depth, bevelEnabled: false, curveSegments: 3 };
 
-  return geometry;
+    // Compat: ExtrudeBufferGeometry (vecchie versioni) vs ExtrudeGeometry (recenti)
+    let geometry;
+    if (typeof THREE_NS.ExtrudeBufferGeometry === 'function') {
+      geometry = new THREE_NS.ExtrudeBufferGeometry(shape, extrudeOpts);
+    } else if (typeof THREE_NS.ExtrudeGeometry === 'function') {
+      geometry = new THREE_NS.ExtrudeGeometry(shape, extrudeOpts);
+    } else {
+      throw new Error('Né ExtrudeBufferGeometry né ExtrudeGeometry disponibili in THREE.');
+    }
 
-}
+    return geometry;
+  }
 
-export { RoundedPlaneGeometry };
+  window.RoundedPlaneGeometry = RoundedPlaneGeometry;
+})();
