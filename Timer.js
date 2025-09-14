@@ -1,79 +1,67 @@
-import { Animation } from './Animation.js';
+// Timer.js — versione classica (no import/export)
+// Dipende da Animation.js (che deve definire window.Animation)
 
-class Timer extends Animation {
+(function () {
+  'use strict';
 
-	constructor( game ) {
+  class Timer extends window.Animation {
+    constructor(game) {
+      super(false);
 
-		super( false );
+      this.game = game;
+      this.reset();
+    }
 
-		this.game = game;
-		this.reset();
-		
-	}
+    start(continueGame) {
+      this.startTime = continueGame ? (Date.now() - this.deltaTime) : Date.now();
+      this.deltaTime = 0;
+      this.converted = this.convert();
 
-	start( continueGame ) {
+      super.start();
+    }
 
-		this.startTime = continueGame ? ( Date.now() - this.deltaTime ) : Date.now();
-		this.deltaTime = 0;
-		this.converted = this.convert();
+    reset() {
+      this.startTime = 0;
+      this.currentTime = 0;
+      this.deltaTime = 0;
+      this.converted = '0:00';
+    }
 
-		super.start();
+    stop() {
+      this.currentTime = Date.now();
+      this.deltaTime = this.currentTime - this.startTime;
+      this.convert();
 
-	}
+      super.stop();
 
-	reset() {
+      return { time: this.converted, millis: this.deltaTime };
+    }
 
-		this.startTime = 0;
-		this.currentTime = 0;
-		this.deltaTime = 0;
-		this.converted = '0:00';
+    update() {
+      const old = this.converted;
 
-	}
+      this.currentTime = Date.now();
+      this.deltaTime = this.currentTime - this.startTime;
+      this.convert();
 
-	stop() {
+      if (this.converted !== old) {
+        localStorage.setItem('theCube_time', this.deltaTime);
+        this.setText();
+      }
+    }
 
-		this.currentTime = Date.now();
-		this.deltaTime = this.currentTime - this.startTime;
-		this.convert();
+    convert() {
+      const seconds = parseInt((this.deltaTime / 1000) % 60);
+      const minutes = parseInt(this.deltaTime / (1000 * 60));
 
-		super.stop();
+      this.converted = minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
+      return this.converted;
+    }
 
-		return { time: this.converted, millis: this.deltaTime };
+    setText() {
+      this.game.dom.texts.timer.innerHTML = this.converted;
+    }
+  }
 
-	}
-
-	update() {
-
-		const old = this.converted;
-
-		this.currentTime = Date.now();
-		this.deltaTime = this.currentTime - this.startTime;
-		this.convert();
-
-		if ( this.converted != old ) {
-
-			localStorage.setItem( 'theCube_time', this.deltaTime );
-			this.setText();
-
-		}
-
-	}
-
-	convert() {
-
-		const seconds = parseInt( ( this.deltaTime / 1000 ) % 60 );
-		const minutes = parseInt( ( this.deltaTime / ( 1000 * 60 ) ) );
-
-		this.converted = minutes + ':' + ( seconds < 10 ? '0' : '' ) + seconds;
-
-	}
-
-	setText() {
-
-		this.game.dom.texts.timer.innerHTML = this.converted;
-
-	}
-
-}
-
-export { Timer };
+  window.Timer = Timer;
+})();
