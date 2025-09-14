@@ -35,9 +35,13 @@
   <!-- CSS -->
   <link rel="stylesheet" href="styles.css" />
 
-  <script>window.gameVersion = '0.99.3';</script>
+  <script>
+    // versiona la cache offline
+    window.gameVersion = '0.99.4';
+  </script>
 </head>
 <body>
+
   <noscript>
     <p style="padding:12px;background:#ffeded;color:#900;font-family:system-ui,Arial">
       Attiva JavaScript per giocare al Cubo di Rubik.
@@ -49,11 +53,17 @@
     <div class="ui__game"></div>
 
     <div class="ui__texts">
-      <h1 class="text text--title"><span>IL</span><span>CUBO</span></h1>
+      <h1 class="text text--title">
+        <span>IL</span>
+        <span>CUBO</span>
+      </h1>
       <div class="text text--note">Doppio click e parti!!!</div>
       <div class="text text--timer">0:00</div>
       <div class="text text--complete"><span>Complete!</span></div>
-      <div class="text text--best-time"><icon trophy></icon><span>Best Time!</span></div>
+      <div class="text text--best-time">
+        <icon trophy></icon>
+        <span>Best Time!</span>
+      </div>
     </div>
 
     <div class="ui__prefs">
@@ -89,24 +99,28 @@
     </div>
   </div>
 
-  <!-- SOLO questi due: three.js + il bundle cube.js -->
+  <!-- JS: SOLO il bundle -->
   <script src="three.js"></script>
   <script src="cube.js"></script>
 
-  <!-- Lasciare disattivato l'offline finché non funziona
+  <!-- UpUp per offline (solo su HTTPS per evitare errori) -->
   <script src="upup.min.js"></script>
   <script>
-    if (typeof UpUp !== 'undefined' && UpUp) {
+    if (location.protocol === 'https:' && typeof UpUp !== 'undefined' && UpUp) {
       UpUp.start({
         'cache-version': window.gameVersion,
         'content-url': 'index.html',
-        'assets': ['styles.css','three.js','cube.js',
-          'icons/favicon-32x32.png','icons/favicon-16x16.png',
-          'icons/apple-touch-icon.png','icons/meta-image.png'
+        'assets': [
+          'styles.css',
+          'three.js',
+          'cube.js',
+          'icons/favicon-32x32.png',
+          'icons/favicon-16x16.png',
+          'icons/apple-touch-icon.png',
+          'icons/meta-image.png'
         ]
       });
     }
   </script>
-  -->
 </body>
 </html>
