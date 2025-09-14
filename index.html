@@ -35,12 +35,9 @@
   <!-- CSS -->
   <link rel="stylesheet" href="styles.css" />
 
-  <script>
-    window.gameVersion = '0.99.3';
-  </script>
+  <script>window.gameVersion = '0.99.3';</script>
 </head>
 <body>
-
   <noscript>
     <p style="padding:12px;background:#ffeded;color:#900;font-family:system-ui,Arial">
       Attiva JavaScript per giocare al Cubo di Rubik.
@@ -52,17 +49,11 @@
     <div class="ui__game"></div>
 
     <div class="ui__texts">
-      <h1 class="text text--title">
-        <span>IL</span>
-        <span>CUBO</span>
-      </h1>
+      <h1 class="text text--title"><span>IL</span><span>CUBO</span></h1>
       <div class="text text--note">Doppio click e parti!!!</div>
       <div class="text text--timer">0:00</div>
       <div class="text text--complete"><span>Complete!</span></div>
-      <div class="text text--best-time">
-        <icon trophy></icon>
-        <span>Best Time!</span>
-      </div>
+      <div class="text text--best-time"><icon trophy></icon><span>Best Time!</span></div>
     </div>
 
     <div class="ui__prefs">
@@ -98,64 +89,24 @@
     </div>
   </div>
 
-  <!-- Scripts (ordine CRITICO) -->
-  <!-- Core lib -->
+  <!-- SOLO questi due: three.js + il bundle cube.js -->
   <script src="three.js"></script>
+  <script src="cube.js"></script>
 
-  <!-- Base engine -->
-  <script src="Animation.js"></script>
-  <script src="Easing.js"></script>
-  <script src="Tween.js"></script>
-
-  <!-- Input/controls UI -->
-  <script src="Draggable.js"></script>
-  <script src="Range.js"></script>
-
-  <!-- Mondo + geometrie -->
-  <script src="World.js"></script>
-  <script src="RoundedBoxGeometry.js"></script>
-  <script src="RoundedPlaneGeometry.js"></script>
-
-  <!-- Modello + controlli 3D -->
-  <script src="Cube.js"></script>
-  <script src="Controls.js"></script>
-
-  <!-- Sistemi di gioco -->
-  <script src="Scrambler.js"></script>
-  <script src="Scores.js"></script>
-  <script src="Storage.js"></script>
-  <script src="States.js"></script>
-  <script src="Icons.js"></script>
-  <script src="Themes.js"></script>
-  <script src="ThemeEditor.js"></script>
-  <script src="Transition.js"></script>
-  <script src="Timer.js"></script>
-
-  <!-- Avvio -->
-  <script src="Game.js"></script>
-
-  <!-- Offline (opzionale) -->
+  <!-- Lasciare disattivato l'offline finché non funziona
   <script src="upup.min.js"></script>
   <script>
     if (typeof UpUp !== 'undefined' && UpUp) {
       UpUp.start({
         'cache-version': window.gameVersion,
         'content-url': 'index.html',
-        'assets': [
-          'styles.css',
-          'three.js',
-          'Animation.js','Easing.js','Tween.js',
-          'Draggable.js','Range.js',
-          'World.js','RoundedBoxGeometry.js','RoundedPlaneGeometry.js',
-          'Cube.js','Controls.js',
-          'Scrambler.js','Scores.js','Storage.js','States.js','Icons.js',
-          'Themes.js','ThemeEditor.js','Transition.js','Timer.js',
-          'Game.js',
+        'assets': ['styles.css','three.js','cube.js',
           'icons/favicon-32x32.png','icons/favicon-16x16.png',
           'icons/apple-touch-icon.png','icons/meta-image.png'
         ]
       });
     }
   </script>
+  -->
 </body>
 </html>
