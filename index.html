@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width,height=device-height,user-scalable=no,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0" />
   <meta name="author" content="Alessandro Pezzali" />
   <meta name="description" content="Il Cubo di Rubik" />
-
   <title>Il Cubo di Rubik</title>
 
   <!-- Open Graph -->
@@ -37,7 +36,6 @@
   <link rel="stylesheet" href="styles.css" />
 
   <script>
-    // versiona la cache offline
     window.gameVersion = '0.99.3';
   </script>
 </head>
@@ -100,35 +98,43 @@
     </div>
   </div>
 
-  <!-- Scripts (classici, ordine importante) -->
+  <!-- Scripts (ordine CRITICO) -->
+  <!-- Core lib -->
   <script src="three.js"></script>
 
-  <!-- Utilità/tween/drag -->
+  <!-- Base engine -->
+  <script src="Animation.js"></script>
   <script src="Easing.js"></script>
   <script src="Tween.js"></script>
-  <script src="Animation.js"></script>
+
+  <!-- Input/controls UI -->
   <script src="Draggable.js"></script>
+  <script src="Range.js"></script>
 
-  <!-- Core gioco -->
+  <!-- Mondo + geometrie -->
   <script src="World.js"></script>
-  <script src="Themes.js"></script>
-  <script src="ThemeEditor.js"></script>
-  <script src="Storage.js"></script>
-  <script src="Scores.js"></script>
-  <script src="Timer.js"></script>
-  <script src="Scrambler.js"></script>
-  <script src="Transition.js"></script>
-  <script src="States.js"></script>
-  <script src="Icons.js"></script>
+  <script src="RoundedBoxGeometry.js"></script>
+  <script src="RoundedPlaneGeometry.js"></script>
 
-  <!-- Modello e controlli -->
+  <!-- Modello + controlli 3D -->
   <script src="Cube.js"></script>
   <script src="Controls.js"></script>
 
-  <!-- Avvio gioco -->
+  <!-- Sistemi di gioco -->
+  <script src="Scrambler.js"></script>
+  <script src="Scores.js"></script>
+  <script src="Storage.js"></script>
+  <script src="States.js"></script>
+  <script src="Icons.js"></script>
+  <script src="Themes.js"></script>
+  <script src="ThemeEditor.js"></script>
+  <script src="Transition.js"></script>
+  <script src="Timer.js"></script>
+
+  <!-- Avvio -->
   <script src="Game.js"></script>
 
-  <!-- UpUp per offline -->
+  <!-- Offline (opzionale) -->
   <script src="upup.min.js"></script>
   <script>
     if (typeof UpUp !== 'undefined' && UpUp) {
@@ -137,17 +143,16 @@
         'content-url': 'index.html',
         'assets': [
           'styles.css',
-          // core
           'three.js',
-          'Easing.js','Tween.js','Animation.js','Draggable.js',
-          'World.js','Themes.js','ThemeEditor.js','Storage.js','Scores.js','Timer.js',
-          'Scrambler.js','Transition.js','States.js','Icons.js',
-          'Cube.js','Controls.js','Game.js',
-          // icone
-          'icons/favicon-32x32.png',
-          'icons/favicon-16x16.png',
-          'icons/apple-touch-icon.png',
-          'icons/meta-image.png'
+          'Animation.js','Easing.js','Tween.js',
+          'Draggable.js','Range.js',
+          'World.js','RoundedBoxGeometry.js','RoundedPlaneGeometry.js',
+          'Cube.js','Controls.js',
+          'Scrambler.js','Scores.js','Storage.js','States.js','Icons.js',
+          'Themes.js','ThemeEditor.js','Transition.js','Timer.js',
+          'Game.js',
+          'icons/favicon-32x32.png','icons/favicon-16x16.png',
+          'icons/apple-touch-icon.png','icons/meta-image.png'
         ]
       });
     }
