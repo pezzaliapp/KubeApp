@@ -1,5 +1,9 @@
 // Timer.js — versione classica (no import/export)
 // Dipende da Animation.js (che deve definire window.Animation)
+/*
+© 2025 Alessandro Pezzali. Tutti i diritti riservati.
+Licenza d’Uso — Il Cubo di Rubik PWA
+*/
 
 (function () {
   'use strict';
