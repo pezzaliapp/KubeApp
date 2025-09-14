@@ -1,83 +1,62 @@
+// Easing.js (robustata)
+const clamp01 = t => t < 0 ? 0 : t > 1 ? 1 : t;
+
 const Easing = {
-
   Power: {
-
-    In: power => {
-
-      power = Math.round( power || 1 );
-
-      return t => Math.pow( t, power );
-
+    In: (power = 1) => {
+      power = Math.round(power);
+      return t => Math.pow(clamp01(t), power);
     },
-
-    Out: power => {
-
-      power = Math.round( power || 1 );
-
-      return t => 1 - Math.abs( Math.pow( t - 1, power ) );
-
+    Out: (power = 1) => {
+      power = Math.round(power);
+      return t => 1 - Math.pow(1 - clamp01(t), power);
     },
-
-    InOut: power => {
-
-      power = Math.round( power || 1 );
-
-      return t => ( t < 0.5 )
-        ? Math.pow( t * 2, power ) / 2
-        : ( 1 - Math.abs( Math.pow( ( t * 2 - 1 ) - 1, power ) ) ) / 2 + 0.5;
-
-    },
-
+    InOut: (power = 1) => {
+      power = Math.round(power);
+      return t => {
+        t = clamp01(t) * 2;
+        if (t < 1) return 0.5 * Math.pow(t, power);
+        return 1 - 0.5 * Math.pow(2 - t, power);
+      };
+    }
   },
 
   Sine: {
-
-    In: () => t => 1 + Math.sin( Math.PI / 2 * t - Math.PI / 2 ),
-
-    Out: () => t => Math.sin( Math.PI / 2 * t ),
-
-    InOut: () => t => ( 1 + Math.sin( Math.PI * t - Math.PI / 2 ) ) / 2,
-
+    // Canoniche: In = 1 - cos(πt/2), Out = sin(πt/2), InOut = 0.5*(1 - cos(πt))
+    In:  () => t => 1 - Math.cos((Math.PI / 2) * clamp01(t)),
+    Out: () => t => Math.sin((Math.PI / 2) * clamp01(t)),
+    InOut: () => t => 0.5 * (1 - Math.cos(Math.PI * clamp01(t))),
   },
 
   Back: {
-
-    Out: s => {
-
-      s = s || 1.70158;
-
-      return t => { return ( t -= 1 ) * t * ( ( s + 1 ) * t + s ) + 1; };
-
+    In:  (s = 1.70158) => t => {
+      t = clamp01(t);
+      return t * t * ((s + 1) * t - s);
     },
-
-    In: s => {
-
-      s = s || 1.70158;
-
-      return t => { return t * t * ( ( s + 1 ) * t - s ); };
-
+    Out: (s = 1.70158) => t => {
+      t = clamp01(t) - 1;
+      return t * t * ((s + 1) * t + s) + 1;
     }
-
   },
 
   Elastic: {
+    // Out: classica con ampiezza (a) e periodo (p)
+    Out: (amplitude = 1, period = 0.3) => {
+      const a = amplitude > 0 ? amplitude : 1;
+      const p = period > 0 ? period : 0.3;
 
-    Out: ( amplitude, period ) => {
+      const PI2 = Math.PI * 2;
+      const s = (Math.asin(1 / a) || 0) * (p / PI2);
 
-      let PI2 = Math.PI * 2;
-
-      let p1 = ( amplitude >= 1 ) ? amplitude : 1;
-      let p2 = ( period || 0.3 ) / ( amplitude < 1 ? amplitude : 1 );
-      let p3 = p2 / PI2 * ( Math.asin( 1 / p1 ) || 0 );
-
-      p2 = PI2 / p2;
-
-      return t => { return p1 * Math.pow( 2, -10 * t ) * Math.sin( ( t - p3 ) * p2 ) + 1 }
-
-    },
-
-  },
-
+      return t => {
+        t = clamp01(t);
+        // evita exp e sin quando siamo a 0 o 1
+        if (t === 0) return 0;
+        if (t === 1) return 1;
+        return a * Math.pow(2, -10 * t) * Math.sin((t - s) * (PI2 / p)) + 1;
+      };
+    }
+  }
 };
 
 export { Easing };
