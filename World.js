@@ -1,4 +1,10 @@
 // World.js — versione classica (no modules), dipende da window.Animation e THREE
+
+/*
+© 2025 Alessandro Pezzali. Tutti i diritti riservati.
+Licenza d’Uso — Il Cubo di Rubik PWA
+*/
+
 (function () {
   'use strict';
 
