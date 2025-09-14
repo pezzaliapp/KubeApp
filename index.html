@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width,height=device-height,user-scalable=no,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0" />
   <meta name="author" content="Alessandro Pezzali" />
   <meta name="description" content="Il Cubo di Rubik" />
-
   <title>Il Cubo di Rubik</title>
 
   <!-- Open Graph -->
@@ -30,19 +29,15 @@
   <link rel="mask-icon" href="icons/safari-pinned-tab.svg" color="#5bbad5" />
   <link rel="shortcut icon" href="icons/favicon.ico" />
 
-  <!-- Manifest (opzionale) -->
-  <!-- <link rel="manifest" href="manifest.json" /> -->
-
   <!-- CSS -->
   <link rel="stylesheet" href="styles.css" />
 
   <script>
-    // versione cache offline
-    window.gameVersion = '0.99.3';
+    // bump versione per invalidare la cache offline
+    window.gameVersion = '0.99.4';
   </script>
 </head>
 <body>
-
   <noscript>
     <p style="padding:12px;background:#ffeded;color:#900;font-family:system-ui,Arial">
       Attiva JavaScript per giocare al Cubo di Rubik.
@@ -54,20 +49,17 @@
     <div class="ui__game" aria-label="Area di gioco 3D"></div>
 
     <div class="ui__texts">
-      <h1 class="text text--title" aria-label="Titolo">
-        <span>IL</span>
-        <span>CUBO</span>
-      </h1>
+      <h1 class="text text--title"><span>IL</span><span>CUBO</span></h1>
       <div class="text text--note">Doppio click e parti!!!</div>
-      <div class="text text--timer" aria-label="Timer">0:00</div>
+      <div class="text text--timer">0:00</div>
       <div class="text text--complete"><span>Completato!</span></div>
       <div class="text text--best-time">
-        <icon trophy aria-hidden="true"></icon>
+        <icon trophy></icon>
         <span>Miglior tempo!</span>
       </div>
     </div>
 
-    <div class="ui__prefs" aria-label="Preferenze">
+    <div class="ui__prefs">
       <range name="size" title="Dimensione Cubo" list="2,3,4,5"></range>
       <range name="flip" title="Tipo di Rotazione" list="Rapido,Morbido,Rimbalzo"></range>
       <range name="scramble" title="Lunghezza Mischia" list="20,25,30"></range>
@@ -75,13 +67,13 @@
       <range name="theme" title="Schema Colori" list="Classico,Erno,Polvere,Camo,Pioggia"></range>
     </div>
 
-    <div class="ui__theme" aria-label="Editor colori tema">
+    <div class="ui__theme">
       <range name="hue" title="Tonalità" color></range>
       <range name="saturation" title="Saturazione" color></range>
       <range name="lightness" title="Luminosità" color></range>
     </div>
 
-    <div class="ui__stats" aria-label="Statistiche">
+    <div class="ui__stats">
       <div class="stats" name="cube-size"><i>Cubo:</i><b>3x3x3</b></div>
       <div class="stats" name="total-solves"><i>Soluzioni totali:</i><b>-</b></div>
       <div class="stats" name="best-time"><i>Miglior tempo:</i><b>-</b></div>
@@ -91,7 +83,7 @@
       <div class="stats" name="average-25"><i>Media di 25:</i><b>-</b></div>
     </div>
 
-    <div class="ui__buttons" aria-label="Pulsanti">
+    <div class="ui__buttons">
       <button class="btn btn--bl btn--stats" aria-label="Statistiche"><icon trophy></icon></button>
       <button class="btn btn--br btn--prefs" aria-label="Preferenze"><icon settings></icon></button>
       <button class="btn btn--bl btn--back" aria-label="Indietro"><icon back></icon></button>
@@ -102,14 +94,10 @@
 
   <!-- Scripts (ordine importante) -->
   <script src="three.js"></script>
-
-  <!-- Utilità/tween/drag -->
   <script src="Easing.js"></script>
   <script src="Tween.js"></script>
   <script src="Animation.js"></script>
   <script src="Draggable.js"></script>
-
-  <!-- Core gioco -->
   <script src="World.js"></script>
   <script src="Themes.js"></script>
   <script src="ThemeEditor.js"></script>
@@ -120,12 +108,8 @@
   <script src="Transition.js"></script>
   <script src="States.js"></script>
   <script src="Icons.js"></script>
-
-  <!-- Modello e controlli -->
   <script src="Cube.js"></script>
   <script src="Controls.js"></script>
-
-  <!-- Avvio gioco -->
   <script src="Game.js"></script>
 
   <!-- Offline (UpUp) -->
