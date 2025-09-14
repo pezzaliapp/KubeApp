@@ -37,10 +37,17 @@
   <link rel="stylesheet" href="styles.css" />
 
   <script>
-    window.gameVersion = '0.99.2';
+    // versiona la cache offline
+    window.gameVersion = '0.99.3';
   </script>
 </head>
 <body>
+
+  <noscript>
+    <p style="padding:12px;background:#ffeded;color:#900;font-family:system-ui,Arial">
+      Attiva JavaScript per giocare al Cubo di Rubik.
+    </p>
+  </noscript>
 
   <div class="ui">
     <div class="ui__background"></div>
@@ -93,11 +100,35 @@
     </div>
   </div>
 
-  <!-- Scripts in root -->
+  <!-- Scripts (classici, ordine importante) -->
   <script src="three.js"></script>
-  <script src="cube.js"></script>
 
-  <!-- UpUp for offline -->
+  <!-- Utilità/tween/drag -->
+  <script src="Easing.js"></script>
+  <script src="Tween.js"></script>
+  <script src="Animation.js"></script>
+  <script src="Draggable.js"></script>
+
+  <!-- Core gioco -->
+  <script src="World.js"></script>
+  <script src="Themes.js"></script>
+  <script src="ThemeEditor.js"></script>
+  <script src="Storage.js"></script>
+  <script src="Scores.js"></script>
+  <script src="Timer.js"></script>
+  <script src="Scrambler.js"></script>
+  <script src="Transition.js"></script>
+  <script src="States.js"></script>
+  <script src="Icons.js"></script>
+
+  <!-- Modello e controlli -->
+  <script src="Cube.js"></script>
+  <script src="Controls.js"></script>
+
+  <!-- Avvio gioco -->
+  <script src="Game.js"></script>
+
+  <!-- UpUp per offline -->
   <script src="upup.min.js"></script>
   <script>
     if (typeof UpUp !== 'undefined' && UpUp) {
@@ -106,8 +137,13 @@
         'content-url': 'index.html',
         'assets': [
           'styles.css',
+          // core
           'three.js',
-          'cube.js',
+          'Easing.js','Tween.js','Animation.js','Draggable.js',
+          'World.js','Themes.js','ThemeEditor.js','Storage.js','Scores.js','Timer.js',
+          'Scrambler.js','Transition.js','States.js','Icons.js',
+          'Cube.js','Controls.js','Game.js',
+          // icone
           'icons/favicon-32x32.png',
           'icons/favicon-16x16.png',
           'icons/apple-touch-icon.png',
