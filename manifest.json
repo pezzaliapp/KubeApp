@@ -5,6 +5,7 @@
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#000000",
+
   "icons": [
     {
       "src": "icons/favicon-192.png",
@@ -16,5 +17,9 @@
       "sizes": "512x512",
       "type": "image/png"
     }
-  ]
+  ],
+
+  "author": "Alessandro Pezzali",
+  "copyright": "© 2025 Alessandro Pezzali. Tutti i diritti riservati.",
+  "license": "Licenza d’Uso — Il Cubo di Rubik PWA. Solo uso personale, vietata modifica/distribuzione senza autorizzazione."
 }
