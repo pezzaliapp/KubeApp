@@ -1,4 +1,9 @@
 // ThemeEditor.js — versione classica (no modules), usa window.Tween/Easing ed espone window.ThemeEditor
+/*
+© 2025 Alessandro Pezzali. Tutti i diritti riservati.
+Licenza d’Uso — Il Cubo di Rubik PWA
+*/
+
 (function () {
   'use strict';
 
