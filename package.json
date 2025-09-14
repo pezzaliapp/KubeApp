@@ -1,4 +1,11 @@
 {
+  "name": "il-cubo-di-rubik",
+  "version": "1.0.0",
+  "license": "SEE LICENSE IN LICENSE.txt",
+  "author": "Alessandro Pezzali"
+},
+
+{
   "name": "bsehovac.github.io",
   "version": "1.0.0",
   "description": "",
