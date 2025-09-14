@@ -1,125 +1,149 @@
-// Draggable.js (ES module) — versione pulita e robusta
-class Draggable {
-  constructor(element, options) {
-    this.position = {
-      current: new THREE.Vector2(),
-      start: new THREE.Vector2(),
-      delta: new THREE.Vector2(),
-      old: new THREE.Vector2(),
-      drag: new THREE.Vector2(),
-    };
+// Draggable.js — versione classica (no modules), espone window.Draggable
+(function () {
+  const THREE_NS = window.THREE;
 
-    this.options = Object.assign({ calcDelta: false }, options || {});
+  function isLeftMouse(event) {
+    // button: 0 = left; which: 1 = left (fallback)
+    if (typeof event.button === 'number') return event.button === 0;
+    if (typeof event.which === 'number') return event.which === 1;
+    return true;
+  }
 
-    this.element = element;
-    this.touch = null;
+  class Draggable {
+    constructor(element, options) {
+      this.position = {
+        current: new THREE_NS.Vector2(),
+        start:   new THREE_NS.Vector2(),
+        delta:   new THREE_NS.Vector2(),
+        old:     new THREE_NS.Vector2(),
+        drag:    new THREE_NS.Vector2(),
+      };
 
-    // Migliore controllo dello scroll/gesture solo nell’area di gioco
-    // (evita il preventDefault globale)
-    if (this.element && this.element.style) {
-      this.element.style.touchAction = 'none';   // evita scroll durante il drag
-      this.element.style.userSelect  = 'none';   // evita selezione testo
-      this.element.style.webkitUserSelect = 'none';
+      this.options = Object.assign({ calcDelta: false }, options || {});
+      this.element = element;
+      this.touch = null;
+
+      // Evita scroll/zoom e selezione SOLO nell'area di gioco
+      if (this.element && this.element.style) {
+        this.element.style.touchAction = 'none';
+        this.element.style.userSelect = 'none';
+        this.element.style.webkitUserSelect = 'none';
+      }
+
+      // Bind per removeEventListener
+      this._onStart = this._onStart.bind(this);
+      this._onMove  = this._onMove.bind(this);
+      this._onEnd   = this._onEnd.bind(this);
+      this._onCancel= this._onEnd.bind(this);
+
+      this.onDragStart = () => {};
+      this.onDragMove  = () => {};
+      this.onDragEnd   = () => {};
+
+      this.enable();
+      return this;
     }
 
-    this.drag = {
-      start: (event) => {
-        if (event.type === 'mousedown' && event.which !== 1) return;
-        if (event.type === 'touchstart' && event.touches.length > 1) return;
+    enable() {
+      if (!this.element) return this;
+      // start su element; move/end su window
+      this.element.addEventListener('touchstart', this._onStart, { passive: true });
+      this.element.addEventListener('mousedown',  this._onStart, false);
+      return this;
+    }
 
-        this.getPositionCurrent(event);
+    disable() {
+      if (!this.element) return this;
+      this.element.removeEventListener('touchstart', this._onStart, { passive: true });
+      this.element.removeEventListener('mousedown',  this._onStart, false);
+      // cleanup eventuali listener residui
+      window.removeEventListener('touchmove', this._onMove, { passive: false });
+      window.removeEventListener('touchend',  this._onEnd,  { passive: true  });
+      window.removeEventListener('touchcancel', this._onCancel, { passive: true });
+      window.removeEventListener('mousemove', this._onMove, false);
+      window.removeEventListener('mouseup',   this._onEnd,  false);
+      return this;
+    }
 
-        if (this.options.calcDelta) {
-          this.position.start.copy(this.position.current);
-          this.position.delta.set(0, 0);
-          this.position.drag.set(0, 0);
-        }
+    _onStart(event) {
+      if (event.type === 'mousedown' && !isLeftMouse(event)) return;
+      if (event.type === 'touchstart' && event.touches.length > 1) return;
 
-        this.touch = (event.type === 'touchstart');
+      this.getPositionCurrent(event);
 
-        this.onDragStart(this.position);
+      if (this.options.calcDelta) {
+        this.position.start.copy(this.position.current);
+        this.position.delta.set(0, 0);
+        this.position.drag.set(0, 0);
+      }
 
-        // listener sul window per seguire il drag anche fuori dal canvas
-        const moveEvt = this.touch ? 'touchmove' : 'mousemove';
-        const endEvt  = this.touch ? 'touchend'  : 'mouseup';
+      this.touch = (event.type === 'touchstart');
+      this.onDragStart(this.position);
 
-        window.addEventListener(moveEvt, this.drag.move, { passive: false });
-        window.addEventListener(endEvt,  this.drag.end,  { passive: true  });
-        if (this.touch) {
-          window.addEventListener('touchcancel', this.drag.end, { passive: true });
-        }
-      },
+      const moveEvt = this.touch ? 'touchmove' : 'mousemove';
+      const endEvt  = this.touch ? 'touchend'  : 'mouseup';
 
-      move: (event) => {
-        if (this.options.calcDelta) {
-          this.position.old.copy(this.position.current);
-        }
+      window.addEventListener(moveEvt, this._onMove, { passive: false });
+      window.addEventListener(endEvt,  this._onEnd,  this.touch ? { passive: true } : false);
+      if (this.touch) {
+        window.addEventListener('touchcancel', this._onCancel, { passive: true });
+      }
+    }
 
-        this.getPositionCurrent(event);
+    _onMove(event) {
+      if (this.options.calcDelta) {
+        this.position.old.copy(this.position.current);
+      }
 
-        if (this.options.calcDelta) {
-          this.position.delta.copy(this.position.current).sub(this.position.old);
-          this.position.drag.copy(this.position.current).sub(this.position.start);
-        }
+      this.getPositionCurrent(event);
 
-        this.onDragMove(this.position);
-      },
+      if (this.options.calcDelta) {
+        this.position.delta.copy(this.position.current).sub(this.position.old);
+        this.position.drag.copy(this.position.current).sub(this.position.start);
+      }
 
-      end: (event) => {
-        this.getPositionCurrent(event);
-        this.onDragEnd(this.position);
+      this.onDragMove(this.position);
 
-        const moveEvt = this.touch ? 'touchmove' : 'mousemove';
-        const endEvt  = this.touch ? 'touchend'  : 'mouseup';
+      // Evita scroll durante il drag su touch
+      if (event.cancelable) event.preventDefault();
+    }
 
-        window.removeEventListener(moveEvt, this.drag.move, false);
-        window.removeEventListener(endEvt,  this.drag.end,  false);
-        if (this.touch) {
-          window.removeEventListener('touchcancel', this.drag.end, false);
-        }
-      },
-    };
+    _onEnd(event) {
+      this.getPositionCurrent(event);
+      this.onDragEnd(this.position);
 
-    this.onDragStart = () => {};
-    this.onDragMove  = () => {};
-    this.onDragEnd   = () => {};
+      const moveEvt = this.touch ? 'touchmove' : 'mousemove';
+      const endEvt  = this.touch ? 'touchend'  : 'mouseup';
 
-    this.enable();
-    return this;
+      window.removeEventListener(moveEvt, this._onMove, { passive: false });
+      window.removeEventListener(endEvt,  this._onEnd,  this.touch ? { passive: true } : false);
+      if (this.touch) {
+        window.removeEventListener('touchcancel', this._onCancel, { passive: true });
+      }
+    }
+
+    getPositionCurrent(event) {
+      const e = event.touches
+        ? (event.touches[0] || (event.changedTouches && event.changedTouches[0]) || event)
+        : event;
+
+      const rect = this.element.getBoundingClientRect();
+      const cx = (e.clientX != null ? e.clientX : e.pageX);
+      const cy = (e.clientY != null ? e.clientY : e.pageY);
+
+      const x = cx - rect.left;
+      const y = cy - rect.top;
+
+      this.position.current.set(x, y);
+    }
+
+    // Converte coordinate pixel-relative all’elemento in NDC per Raycaster
+    convertPosition(position) {
+      position.x = (position.x / this.element.clientWidth) * 2 - 1;
+      position.y = -((position.y / this.element.clientHeight) * 2 - 1);
+      return position;
+    }
   }
 
-  enable() {
-    // start su element; move/end su window
-    this.element.addEventListener('touchstart', this.drag.start, { passive: true });
-    this.element.addEventListener('mousedown',  this.drag.start, false);
-    return this;
-  }
-
-  disable() {
-    this.element.removeEventListener('touchstart', this.drag.start, false);
-    this.element.removeEventListener('mousedown',  this.drag.start, false);
-    return this;
-  }
-
-  getPositionCurrent(event) {
-    const e = event.touches
-      ? (event.touches[0] || event.changedTouches && event.changedTouches[0] || event)
-      : event;
-
-    // Coordinate relative all’elemento target
-    const rect = this.element.getBoundingClientRect();
-    const x = (e.clientX != null ? e.clientX : e.pageX) - rect.left;
-    const y = (e.clientY != null ? e.clientY : e.pageY) - rect.top;
-
-    this.position.current.set(x, y);
-  }
-
-  // Converte coordinate pixel-relative all’elemento in NDC per Raycaster
-  convertPosition(position) {
-    position.x = (position.x / this.element.clientWidth) * 2 - 1;
-    position.y = -((position.y / this.element.clientHeight) * 2 - 1);
-    return position;
-  }
-}
-
-export { Draggable };
+  window.Draggable = Draggable;
+})();
