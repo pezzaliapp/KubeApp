@@ -32,28 +32,55 @@ Licenza d’Uso — Il Cubo di Rubik PWA
   <link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png" />
   <link rel="shortcut icon" href="icons/favicon.ico" />
 
-  <!-- CSS -->
+  <!-- CSS principale -->
   <link rel="stylesheet" href="styles.css" />
-
-  <!-- Stili minimi per il pannello Aiuto (così non tocchi styles.css) -->
-  <style>
-    .help[hidden]{display:none!important}
-    .help{position:fixed;inset:0;z-index:9999;font-family:inherit}
-    .help__backdrop{position:absolute;inset:0;background:rgba(0,0,0,.45);backdrop-filter:blur(2px)}
-    .help__card{position:relative;max-width:720px;margin:4rem auto;background:#fff;color:#111;border-radius:16px;box-shadow:0 12px 40px rgba(0,0,0,.2);padding:1.25rem 1.5rem}
-    .help__card h2{margin:0 0 .5rem;font-size:1.4rem}
-    .help__card h3{margin:1rem 0 .25rem;font-size:1.1rem}
-    .help__card code{font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;background:#f3f3f3;padding:.1rem .35rem;border-radius:6px}
-    .help__card ul,.help__card ol{margin:.35rem 0 .75rem 1.25rem}
-    .help__close{position:absolute;top:.5rem;right:.6rem;width:2rem;height:2rem;border:0;background:transparent;color:#444;font-size:1.5rem;line-height:1;cursor:pointer}
-    .help__close:hover{color:#000}
-    .btn--help{pointer-events:all;font-weight:700;width:2.2em;height:2.2em;border-radius:50%;background:rgba(255,255,255,.9);box-shadow:0 3px 10px rgba(0,0,0,.1)}
-  </style>
 
   <script>
     // bump per forzare l'invalidation della cache offline
     window.gameVersion = '0.0.1'; // prima versione di test su Windows e MacOs
   </script>
+
+  <!-- CSS minimo per il pannello Aiuto (isolato, non tocca gli stili esistenti) -->
+  <style>
+    .help-btn {
+      position: fixed; right: 1rem; top: 1rem;
+      width: 2.25rem; height: 2.25rem; border-radius: 50%;
+      border: 0; background: rgba(0,0,0,.08); color: #111;
+      font: 700 1.1rem/1 system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      cursor: pointer; z-index: 20;
+      box-shadow: 0 2px 6px rgba(0,0,0,.08);
+    }
+    .help-btn:focus { outline: 2px solid #4da3ff; outline-offset: 2px; }
+
+    #helpPanel[hidden] { display: none; }
+    #helpPanel {
+      position: fixed; inset: 0; z-index: 30;
+      background: rgba(0,0,0,.45);
+      display: grid; place-items: center;
+    }
+    .help-card {
+      width: min(820px, 92vw); max-height: 86vh; overflow: auto;
+      background: #fff; color: #111; border-radius: 12px;
+      box-shadow: 0 20px 60px rgba(0,0,0,.25);
+      padding: 18px 20px 10px;
+      font: 400 16px/1.5 system-ui, -apple-system, Segoe UI, Roboto, Arial;
+    }
+    .help-card h2 { margin: 0 0 10px; font-size: 1.35rem; }
+    .help-card h3 { margin: 16px 0 6px; font-size: 1.05rem; }
+    .help-card code {
+      background: #f3f5f8; padding: .15em .35em; border-radius: 6px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+    .help-actions {
+      display: flex; gap: .5rem; justify-content: flex-end; margin-top: 10px;
+    }
+    .help-close {
+      border: 0; background: #111; color: #fff;
+      padding: .55rem .9rem; border-radius: 8px; cursor: pointer;
+      font-weight: 600;
+    }
+    .help-close:focus { outline: 2px solid #4da3ff; outline-offset: 2px; }
+  </style>
 </head>
 <body>
 
@@ -62,6 +89,54 @@ Licenza d’Uso — Il Cubo di Rubik PWA
       Attiva JavaScript per giocare al Cubo di Rubik.
     </p>
   </noscript>
+
+  <!-- Pulsante Aiuto -->
+  <button id="helpToggle" class="help-btn" aria-controls="helpPanel" aria-expanded="false" title="Apri guida">?</button>
+
+  <!-- Pannello Aiuto -->
+  <div id="helpPanel" role="dialog" aria-modal="true" aria-labelledby="helpTitle" hidden>
+    <div class="help-card">
+      <h2 id="helpTitle">Guida per Principianti — Cubo 3×3</h2>
+
+      <h3>Notazione base</h3>
+      <ul>
+        <li><b>R</b> = faccia destra in senso orario • <b>R'</b> = antiorario</li>
+        <li><b>U</b> = faccia superiore orario • <b>U'</b> = antiorario</li>
+        <li><b>L</b> sinistra, <b>D</b> sotto, <b>F</b> frontale, <b>B</b> retro</li>
+      </ul>
+
+      <h3>1) Croce bianca</h3>
+      <p>Forma una croce bianca in alto, allineando i bordi ai centri laterali del loro colore.</p>
+
+      <h3>2) Angoli bianchi</h3>
+      <p>Porta ciascun angolo bianco in alto. Algoritmo tipico: <code>R U R'</code> ripetuto finché l’angolo va al suo posto.</p>
+
+      <h3>3) Secondo strato</h3>
+      <p>
+        Inserisci i bordi centrali:
+        <br><code>U R U' R' U' F' U F</code> (se deve andare a destra)
+        <br><code>U' L' U L U F U' F'</code> (se deve andare a sinistra)
+      </p>
+
+      <h3>4) Croce gialla</h3>
+      <p>Crea la croce gialla sopra con <code>F R U R' U' F'</code> finché compare la croce.</p>
+
+      <h3>5) Posizionare gli angoli gialli</h3>
+      <p>Metti gli angoli al posto (anche se girati): <code>U R U' L' U R' U' L</code>.</p>
+
+      <h3>6) Orientare gli angoli gialli</h3>
+      <p>Ruota gli angoli: <code>R U R' U R U2 R'</code> finché tutti sono gialli in alto.</p>
+
+      <h3>7) Sistemare gli ultimi spigoli</h3>
+      <p>Scambia gli ultimi spigoli con <code>F2 U L R' F2 L' R U F2</code>.</p>
+
+      <p><b>Fatto!</b> Il cubo è risolto 🎉</p>
+
+      <div class="help-actions">
+        <button class="help-close" id="helpClose" title="Chiudi guida">Chiudi</button>
+      </div>
+    </div>
+  </div>
 
   <div class="ui" aria-live="polite">
     <div class="ui__background"></div>
@@ -106,7 +181,6 @@ Licenza d’Uso — Il Cubo di Rubik PWA
     </div>
 
     <div class="ui__buttons">
-      <button class="btn btn--tl btn--help" aria-label="Aiuto">?</button>
       <button class="btn btn--bl btn--stats" aria-label="Statistiche"><icon trophy></icon></button>
       <button class="btn btn--br btn--prefs" aria-label="Preferenze"><icon settings></icon></button>
       <button class="btn btn--bl btn--back" aria-label="Indietro"><icon back></icon></button>
@@ -115,53 +189,41 @@ Licenza d’Uso — Il Cubo di Rubik PWA
     </div>
   </div>
 
-  <!-- Help / Guida -->
-  <div class="help" id="help" hidden>
-    <div class="help__backdrop" data-help-close></div>
-    <div class="help__card" role="dialog" aria-labelledby="help-title" aria-modal="true">
-      <button class="help__close" data-help-close aria-label="Chiudi">×</button>
-      <h2 id="help-title">Come risolvere il Cubo di Rubik (Metodo Principianti)</h2>
-
-      <p>Guida rapida per completare un 3×3×3 con il metodo a strati.</p>
-
-      <h3>Notazione essenziale</h3>
-      <ul>
-        <li><b>U D L R F B</b> = Up, Down, Left, Right, Front, Back (90° orario).</li>
-        <li><b>'</b> = antiorario (es. U'), <b>2</b> = 180° (es. U2).</li>
-      </ul>
-
-      <h3>Passi</h3>
-      <ol>
-        <li><b>Croce bianca</b> sul lato bianco, allineando i bordi ai centri laterali.</li>
-        <li><b>Angoli bianchi</b> (1° strato). Sequenza utile: <code>R U R'</code> ripetuta.</li>
-        <li><b>Secondo strato</b> (inserisci i bordi senza giallo):
-          <ul>
-            <li>Destra: <code>U R U' R' U' F' U F</code></li>
-            <li>Sinistra: <code>U' L' U L U F U' F'</code></li>
-          </ul>
-        </li>
-        <li><b>Croce gialla</b> in alto: <code>F R U R' U' F'</code> finché ottieni la croce.</li>
-        <li><b>Allinea i bordi gialli</b> ai centri: <code>R U R' U R U2 R'</code>.</li>
-        <li><b>Posiziona gli angoli gialli</b> (non importa l’orientamento):
-          <br><code>U R U' L' U R' U' L</code> finché sono al posto giusto.</li>
-        <li><b>Orientamento angoli gialli</b>:
-          <br>Con l’angolo da orientare in alto-fronte-destra, ripeti <code>R U R' U'</code> finché è corretto, ruota U e ripeti.</li>
-      </ol>
-
-      <p style="margin-top:1em;font-size:.9em;opacity:.75">
-        Nota: sintesi didattica per uso personale.
-      </p>
-    </div>
-  </div>
-
   <!-- JS: bundle unico -->
   <script src="three.js"></script>
   <script src="cube.js"></script>
 
+  <!-- Script minimo per aprire/chiudere l’Aiuto (nessun impatto sul gioco) -->
+  <script>
+    (function () {
+      const panel = document.getElementById('helpPanel');
+      const btn   = document.getElementById('helpToggle');
+      const close = document.getElementById('helpClose');
+
+      function openHelp() {
+        panel.hidden = false;
+        btn.setAttribute('aria-expanded', 'true');
+      }
+      function closeHelp() {
+        panel.hidden = true;
+        btn.setAttribute('aria-expanded', 'false');
+      }
+
+      btn.addEventListener('click', openHelp);
+      close.addEventListener('click', closeHelp);
+      panel.addEventListener('click', (e) => {
+        if (e.target === panel) closeHelp();
+      });
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && !panel.hidden) closeHelp();
+      });
+    })();
+  </script>
+
   <!-- Offline (UpUp) -->
   <script src="upup.min.js"></script>
   <script>
-    // UpUp richiede HTTPS
+    // UpUp richiede HTTPS: lo avviamo solo in https
     if (location.protocol === 'https:' && typeof UpUp !== 'undefined' && UpUp) {
       UpUp.start({
         'cache-version': window.gameVersion,
@@ -177,30 +239,6 @@ Licenza d’Uso — Il Cubo di Rubik PWA
         ]
       });
     }
-
-    // Toggle Help
-    (function () {
-      const help = document.getElementById('help');
-      const btn = document.querySelector('.btn--help');
-      const closeEls = document.querySelectorAll('[data-help-close]');
-
-      if (btn && help) {
-        btn.addEventListener('click', () => {
-          help.hidden = false;
-          document.body.style.overflow = 'hidden';
-        });
-        closeEls.forEach(el => el.addEventListener('click', () => {
-          help.hidden = true;
-          document.body.style.overflow = '';
-        }));
-        document.addEventListener('keydown', (e) => {
-          if (!help.hidden && e.key === 'Escape') {
-            help.hidden = true;
-            document.body.style.overflow = '';
-          }
-        });
-      }
-    })();
   </script>
 </body>
 </html>
