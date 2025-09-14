@@ -1,4 +1,9 @@
 // Range.js — versione classica (no modules), usa window.Draggable ed espone window.Range
+/*
+© 2025 Alessandro Pezzali. Tutti i diritti riservati.
+Licenza d’Uso — Il Cubo di Rubik PWA
+*/
+
 (function () {
   'use strict';
 
