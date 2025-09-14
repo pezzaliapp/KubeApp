@@ -1,5 +1,8 @@
 // Game.js — versione non-module (niente import), usa classi globali già caricate
-
+/*
+© 2025 Alessandro Pezzali. Tutti i diritti riservati.
+Licenza d’Uso — Il Cubo di Rubik PWA
+*/
 const STATE = { Menu:0, Playing:1, Complete:2, Stats:3, Prefs:4, Theme:5 };
 const BUTTONS = {
   Menu:['stats','prefs'],
