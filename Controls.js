@@ -1,4 +1,8 @@
 // Controls.js (ES module)
+/*
+© 2025 Alessandro Pezzali. Tutti i diritti riservati.
+Licenza d’Uso — Il Cubo di Rubik PWA
+*/
 import { Tween, Easing } from './Tween.js';
 import { Draggable } from './Draggable.js';
 
