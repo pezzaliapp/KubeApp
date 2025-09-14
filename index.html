@@ -11,13 +11,13 @@
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Il Cubo di Rubik" />
   <meta property="og:title" content="Il Cubo di Rubik" />
-  <meta property="og:description" content="Gioca e risolvi il cubo!" />
+  <meta property="og:description" content="Gioca e risolvi il gioco" />
   <meta property="og:image" content="icons/meta-image.png" />
-  <meta property="og:url" content="https://www.alessandropezzali.it/KubeApp/" />
+  <meta property="og:url" content="https://www.pezzaliapp.com/" />
 
   <!-- PWA / iOS -->
   <meta name="mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-title" content="Il Cubo" />
+  <meta name="apple-mobile-web-app-title" content="The Cube" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="theme-color" content="#ffffff" />
@@ -29,106 +29,95 @@
   <link rel="mask-icon" href="icons/safari-pinned-tab.svg" color="#5bbad5" />
   <link rel="shortcut icon" href="icons/favicon.ico" />
 
+  <!-- Manifest -->
+  <link rel="manifest" href="manifest.json" />
+
   <!-- CSS -->
   <link rel="stylesheet" href="styles.css" />
 
   <script>
-    // bump versione per invalidare la cache offline
+    // versiona la cache offline
     window.gameVersion = '0.99.4';
   </script>
 </head>
 <body>
+
   <noscript>
     <p style="padding:12px;background:#ffeded;color:#900;font-family:system-ui,Arial">
       Attiva JavaScript per giocare al Cubo di Rubik.
     </p>
   </noscript>
 
-  <div class="ui" aria-live="polite">
+  <div class="ui">
     <div class="ui__background"></div>
-    <div class="ui__game" aria-label="Area di gioco 3D"></div>
+    <div class="ui__game"></div>
 
     <div class="ui__texts">
-      <h1 class="text text--title"><span>IL</span><span>CUBO</span></h1>
+      <h1 class="text text--title">
+        <span>IL</span>
+        <span>CUBO</span>
+      </h1>
       <div class="text text--note">Doppio click e parti!!!</div>
       <div class="text text--timer">0:00</div>
-      <div class="text text--complete"><span>Completato!</span></div>
+      <div class="text text--complete"><span>Complete!</span></div>
       <div class="text text--best-time">
         <icon trophy></icon>
-        <span>Miglior tempo!</span>
+        <span>Best Time!</span>
       </div>
     </div>
 
     <div class="ui__prefs">
-      <range name="size" title="Dimensione Cubo" list="2,3,4,5"></range>
-      <range name="flip" title="Tipo di Rotazione" list="Rapido,Morbido,Rimbalzo"></range>
-      <range name="scramble" title="Lunghezza Mischia" list="20,25,30"></range>
-      <range name="fov" title="Angolo Camera" list="Ortografica,Prospettica"></range>
-      <range name="theme" title="Schema Colori" list="Classico,Erno,Polvere,Camo,Pioggia"></range>
+      <range name="size" title="Cube Size" list="2,3,4,5"></range>
+      <range name="flip" title="Flip Type" list="Swift&nbsp;,Smooth,Bounce"></range>
+      <range name="scramble" title="Scramble Length" list="20,25,30"></range>
+      <range name="fov" title="Camera Angle" list="Orthographic,Perspective"></range>
+      <range name="theme" title="Color Scheme" list="Cube,Erno,Dust,Camo,Rain"></range>
     </div>
 
     <div class="ui__theme">
-      <range name="hue" title="Tonalità" color></range>
-      <range name="saturation" title="Saturazione" color></range>
-      <range name="lightness" title="Luminosità" color></range>
+      <range name="hue" title="Hue" color></range>
+      <range name="saturation" title="Saturation" color></range>
+      <range name="lightness" title="Lightness" color></range>
     </div>
 
     <div class="ui__stats">
-      <div class="stats" name="cube-size"><i>Cubo:</i><b>3x3x3</b></div>
-      <div class="stats" name="total-solves"><i>Soluzioni totali:</i><b>-</b></div>
-      <div class="stats" name="best-time"><i>Miglior tempo:</i><b>-</b></div>
-      <div class="stats" name="worst-time"><i>Peggior tempo:</i><b>-</b></div>
-      <div class="stats" name="average-5"><i>Media di 5:</i><b>-</b></div>
-      <div class="stats" name="average-12"><i>Media di 12:</i><b>-</b></div>
-      <div class="stats" name="average-25"><i>Media di 25:</i><b>-</b></div>
+      <div class="stats" name="cube-size"><i>Cube:</i><b>3x3x3</b></div>
+      <div class="stats" name="total-solves"><i>Total solves:</i><b>-</b></div>
+      <div class="stats" name="best-time"><i>Best time:</i><b>-</b></div>
+      <div class="stats" name="worst-time"><i>Worst time:</i><b>-</b></div>
+      <div class="stats" name="average-5"><i>Average of 5:</i><b>-</b></div>
+      <div class="stats" name="average-12"><i>Average of 12:</i><b>-</b></div>
+      <div class="stats" name="average-25"><i>Average of 25:</i><b>-</b></div>
     </div>
 
     <div class="ui__buttons">
-      <button class="btn btn--bl btn--stats" aria-label="Statistiche"><icon trophy></icon></button>
-      <button class="btn btn--br btn--prefs" aria-label="Preferenze"><icon settings></icon></button>
-      <button class="btn btn--bl btn--back" aria-label="Indietro"><icon back></icon></button>
-      <button class="btn btn--br btn--theme" aria-label="Modifica tema"><icon theme></icon></button>
-      <button class="btn btn--br btn--reset" aria-label="Reimposta tema"><icon reset></icon></button>
+      <button class="btn btn--bl btn--stats"><icon trophy></icon></button>
+      <button class="btn btn--br btn--prefs"><icon settings></icon></button>
+      <button class="btn btn--bl btn--back"><icon back></icon></button>
+      <button class="btn btn--br btn--theme"><icon theme></icon></button>
+      <button class="btn btn--br btn--reset"><icon reset></icon></button>
     </div>
   </div>
 
-  <!-- Scripts (ordine importante) -->
+  <!-- JS: SOLO il bundle -->
   <script src="three.js"></script>
-  <script src="Easing.js"></script>
-  <script src="Tween.js"></script>
-  <script src="Animation.js"></script>
-  <script src="Draggable.js"></script>
-  <script src="World.js"></script>
-  <script src="Themes.js"></script>
-  <script src="ThemeEditor.js"></script>
-  <script src="Storage.js"></script>
-  <script src="Scores.js"></script>
-  <script src="Timer.js"></script>
-  <script src="Scrambler.js"></script>
-  <script src="Transition.js"></script>
-  <script src="States.js"></script>
-  <script src="Icons.js"></script>
-  <script src="Cube.js"></script>
-  <script src="Controls.js"></script>
-  <script src="Game.js"></script>
+  <script src="cube.js"></script>
 
-  <!-- Offline (UpUp) -->
+  <!-- UpUp per offline (solo su HTTPS per evitare errori) -->
   <script src="upup.min.js"></script>
   <script>
-    if (typeof UpUp !== 'undefined' && UpUp) {
+    if (location.protocol === 'https:' && typeof UpUp !== 'undefined' && UpUp) {
       UpUp.start({
         'cache-version': window.gameVersion,
         'content-url': 'index.html',
         'assets': [
           'styles.css',
           'three.js',
-          'Easing.js','Tween.js','Animation.js','Draggable.js',
-          'World.js','Themes.js','ThemeEditor.js','Storage.js','Scores.js','Timer.js',
-          'Scrambler.js','Transition.js','States.js','Icons.js',
-          'Cube.js','Controls.js','Game.js',
-          'RoundedBoxGeometry.js','RoundedPlaneGeometry.js',
-          'icons/favicon-32x32.png','icons/favicon-16x16.png',
-          'icons/apple-touch-icon.png','icons/meta-image.png'
+          'cube.js',
+          'icons/favicon-32x32.png',
+          'icons/favicon-16x16.png',
+          'icons/apple-touch-icon.png',
+          'icons/meta-image.png'
         ]
       });
     }
