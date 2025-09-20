@@ -57,7 +57,7 @@ KubeApp/
 
 ⸻
 
-🛠️ Tecnologie principali
+## 🛠️ Tecnologie principali
 	•	🟦 three.js → Rendering 3D del cubo e animazioni.
 	•	📦 PWA → Manifest, icone, supporto installazione, caching offline.
 	•	💻 JavaScript + CSS → UI minimale, controlli, timer e statistiche.
@@ -65,7 +65,7 @@ KubeApp/
 
 ⸻
 
-✨ Funzionalità
+## ✨ Funzionalità
 	•	🔄 Rotazione 3D interattiva con animazioni fluide.
 	•	📏 Dimensioni selezionabili (2×2, 3×3, 4×4, 5×5).
 	•	⏱️ Timer e statistiche integrate (miglior tempo, media, record).
@@ -76,7 +76,7 @@ KubeApp/
 
 ⸻
 
-📖 Storia del progetto
+## 📖 Storia del progetto
 	•	2016 → Punto di partenza: un regalo (il Cubo di Rubik) come stimolo dopo un problema di salute.
 	•	2017 → Primo algoritmo di risoluzione sviluppato in Python.
 	•	2018–2020 → Esperimenti grafici con librerie open source.
@@ -88,7 +88,7 @@ Il progetto, però, è stato adattato e personalizzato negli anni, diventando un
 
 ⸻
 
-🚀 Aggiornamenti futuri
+## 🚀 Aggiornamenti futuri
 	•	📱 Miglioramento interfaccia per dispositivi mobili.
 	•	🏁 Modalità di gioco aggiuntive (es. sfide a tempo).
 	•	🔊 Integrazione di suoni e feedback aptici.
@@ -96,7 +96,7 @@ Il progetto, però, è stato adattato e personalizzato negli anni, diventando un
 
 ⸻
 
-ℹ️ Note personali
+## ℹ️ Note personali
 
 Io il Cubo non lo so risolvere.
 Ed è proprio per questo che ho iniziato a scrivere codice: prima un algoritmo in Python, poi una simulazione “addomesticata” al puro gioco.
@@ -104,7 +104,7 @@ Molti suggerimenti e modifiche sono arrivati dagli appassionati online: colori, 
 
 ⸻
 
-📌 Crediti & Licenza
+## 📌 Crediti & Licenza
 	•	👨‍💻 Autore: Alessandro Pezzali
 	•	📅 Anni di sviluppo: 2017–2025
 	•	⚖️ Licenza: Tutti i diritti riservati
@@ -112,7 +112,7 @@ Molti suggerimenti e modifiche sono arrivati dagli appassionati online: colori, 
 © 2025 Alessandro Pezzali. Tutti i diritti riservati.
 Il software, i contenuti e gli asset grafici sono concessi in uso personale agli utenti finali, senza trasferimento di diritti.
 
-Non è consentito, senza autorizzazione scritta:
+## Non è consentito, senza autorizzazione scritta:
 	•	❌ Copiare, modificare, distribuire o pubblicare il codice.
 	•	❌ Utilizzare il progetto (o derivati) a fini commerciali.
 	•	❌ Eseguire reverse engineering o rimuovere/alterare note di copyright.
