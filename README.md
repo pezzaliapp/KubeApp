@@ -26,26 +26,25 @@ Il progetto nasce dopo un “inciampo” di **salute del 03 novembre 2016**: in 
 
 ## 🗂️ Struttura del progetto
 
-/KubeApp
-│── index.html
-│── styles.css
-│── cube.js
-│── three.js
-│── upup.min.js               (se usato per il caching offline)
-│── service-worker.js         (alternativa standard per SW, se attivato)
-│── manifest.webmanifest
-│── /icons
-│    ├── favicon.ico
-│    ├── favicon-16x16.png
-│    ├── favicon-32x32.png
-│    ├── apple-touch-icon.png
-│    └── meta-image.png
-│── /plugins                  (se presenti)
-│    ├── RoundedBoxGeometry.js
-│    └── RoundedPlaneGeometry.js
-│── README.md
-│── readme.html
-
+KubeApp/
+├─ index.html
+├─ styles.css
+├─ cube.js
+├─ three.js
+├─ upup.min.js
+├─ service-worker.js         # opzionale: se lo usi
+├─ manifest.webmanifest
+├─ icons/
+│  ├─ favicon.ico
+│  ├─ favicon-16x16.png
+│  ├─ favicon-32x32.png
+│  ├─ apple-touch-icon.png
+│  └─ meta-image.png
+├─ plugins/                  # se presenti
+│  ├─ RoundedBoxGeometry.js
+│  └─ RoundedPlaneGeometry.js
+├─ README.md
+└─ readme.html
 ---
 
 ## 🧱 Tecnologie principali
