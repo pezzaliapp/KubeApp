@@ -53,8 +53,8 @@ KubeApp/
 │
 ├─ README.md
 └─ readme.html
-```
 
+```
 ⸻
 
 ## 🛠️ Tecnologie principali
@@ -112,7 +112,7 @@ Molti suggerimenti e modifiche sono arrivati dagli appassionati online: colori, 
 © 2025 Alessandro Pezzali. Tutti i diritti riservati.
 Il software, i contenuti e gli asset grafici sono concessi in uso personale agli utenti finali, senza trasferimento di diritti.
 
-## Non è consentito, senza autorizzazione scritta:
+Non è consentito, senza autorizzazione scritta:
 	•	❌ Copiare, modificare, distribuire o pubblicare il codice.
 	•	❌ Utilizzare il progetto (o derivati) a fini commerciali.
 	•	❌ Eseguire reverse engineering o rimuovere/alterare note di copyright.
