@@ -36,20 +36,6 @@ Licenza d’Uso — Il Cubo di Rubik PWA
   text-transform:none;       /* evita l’uppercase globale */
   opacity:1;                 /* visibile subito */
 }
-/* --- Sottotitolo sotto "IL / CUBO" --- */
-.text--subtitle {
-  position: absolute;
-  top: 48%;                    /* regola verticale: più alto/basso se serve */
-  left: 50%;
-  transform: translateX(-50%);
-  text-align: center;
-  font-size: 1.05em;
-  font-family: 'BungeeFont', sans-serif;
-  letter-spacing: .02em;
-  text-transform: uppercase;
-  white-space: nowrap;
-  opacity: 0;                  /* di default invisibile, appare con animazione */
-}
 
 /* ogni lettera animata */
 .text--subtitle i {
