@@ -226,26 +226,15 @@ Licenza d’Uso — Il Cubo di Rubik PWA
       });
     })();
   </script>
-
-  <!-- Offline (UpUp) -->
-  <script src="upup.min.js"></script>
-  <script>
-    // UpUp richiede HTTPS: lo avviamo solo in https
-    if (location.protocol === 'https:' && typeof UpUp !== 'undefined' && UpUp) {
-      UpUp.start({
-        'cache-version': window.gameVersion,
-        'content-url': 'index.html',
-        'assets': [
-          'styles.css',
-          'three.js',
-          'cube.js',
-          'icons/favicon-32x32.png',
-          'icons/favicon-16x16.png',
-          'icons/apple-touch-icon.png',
-          'icons/meta-image.png'
-        ]
-      });
-    }
-  </script>
-</body>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker
+        .register('./service-worker.js', { scope: './' })
+        .then(reg => console.log('SW registrato:', reg.scope))
+        .catch(err => console.error('SW error:', err));
+    });
+  }
+</script>
+ </body>
 </html>
