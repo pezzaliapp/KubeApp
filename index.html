@@ -40,7 +40,7 @@ Licenza d’Uso — Il Cubo di Rubik PWA
     window.gameVersion = '0.0.1'; // prima versione di test su Windows e MacOs
   </script>
 
-  <!-- CSS minimo per il pannello Aiuto (isolato, non tocca gli stili esistenti) -->
+  <!-- CSS minimo per il pannello Aiuto + nuove scritte -->
   <style>
     .help-btn {
       position: fixed; right: 1rem; top: 1rem;
@@ -80,6 +80,24 @@ Licenza d’Uso — Il Cubo di Rubik PWA
       font-weight: 600;
     }
     .help-close:focus { outline: 2px solid #4da3ff; outline-offset: 2px; }
+
+    /* Nuove scritte sotto il titolo */
+    .subtitle {
+      text-align: center;
+      font-family: 'BungeeFont', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-size: 1.2rem;
+      margin-top: -10px;   /* avvicina a "CUBO" */
+      color: #333;
+    }
+    .copyright {
+      text-align: center;
+      font-size: 0.8rem;
+      margin-top: 12px;
+      color: #555;
+      line-height: 1.35;
+    }
   </style>
 </head>
 <body>
@@ -147,7 +165,19 @@ Licenza d’Uso — Il Cubo di Rubik PWA
         <span>IL</span>
         <span>CUBO</span>
       </h1>
-      <div class="text text--note">Doppio click e parti!!!</div>
+
+      <!-- Sottotitolo richiesto -->
+      <h2 class="subtitle">UNA PWA DI PEZZALIAPP.COM</h2>
+
+      <!-- Nota in maiuscolo -->
+      <div class="text text--note">DOPPIO CLICK E PARTI!!!</div>
+
+      <!-- Copyright + licenza -->
+      <p class="copyright">
+        © 2025 Alessandro Pezzali. Tutti i diritti riservati.<br>
+        Licenza d’Uso — Il Cubo di Rubik PWA
+      </p>
+
       <div class="text text--timer">0:00</div>
       <div class="text text--complete"><span>Completato!</span></div>
       <div class="text text--best-time">
