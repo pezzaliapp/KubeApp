@@ -1,3 +1,4 @@
+
 # 🧩 Il Cubo di Rubik — PWA
 ![Icona App](icons/apple-touch-icon.png)
 
@@ -8,195 +9,113 @@
 
 ## 📖 Panoramica
 
-Questa Progressive Web App (PWA) dedicata al **Cubo di Rubik** è il risultato di un percorso personale e professionale iniziato nel **2017** e portato avanti nel tempo con numerose iterazioni tecniche e grafiche.  
-Il progetto nasce dopo un “inciampo” di **salute del 03 novembre 2016**: in quel momento un collega mi regalò un **Cubo di Rubik** come stimolo per reagire, mantenere la **dopamina** attiva e rimettere in moto la mente. Da lì è iniziato un viaggio durato quasi **10 anni**, fatto di prove, errori, studio e crescita nel coding.
+Questa **Progressive Web App (PWA)** dedicata al **Cubo di Rubik** è il risultato di un percorso personale e professionale iniziato nel **2017** e sviluppato nel corso di quasi dieci anni, con numerose iterazioni tecniche e grafiche.  
 
-> **Nota**: in rete possono esistere grafiche *simili* perché ispirate o rese possibili da **librerie pubbliche** e da materiali condivisi dalla community. **Il codice applicativo di questa PWA resta proprietario**: non è open source e non è liberamente riutilizzabile.
+Il progetto nasce dopo un “inciampo” di **salute del 03 novembre 2016**: in quel momento un collega mi regalò un **Cubo di Rubik** come stimolo per reagire, mantenere la **dopamina** attiva e rimettere in moto la mente.  
+Da lì è iniziato un viaggio fatto di prove, errori, studio e crescita nel coding.
+
+> ℹ️ **Nota**: online possono esistere grafiche *simili* perché ispirate o rese possibili da **librerie pubbliche**.  
+> Il codice applicativo di questa PWA resta **proprietario**: non è open source.
 
 ---
 
 ## 🎯 Obiettivi
 
-- Offrire un **gioco 3D** del Cubo, fruibile da browser desktop e mobile.  
-- Garantire **installazione e utilizzo offline** tramite meccanismi PWA.  
-- Curare **usabilità** e **grafica** con attenzione alle performance.  
-- Documentare il percorso tecnico come strumento di crescita personale.
+- 🎮 Offrire un **gioco 3D** del Cubo, accessibile via browser (desktop e mobile).  
+- 📲 Garantire **installazione e utilizzo offline** tramite PWA.  
+- 🎨 Sviluppare un’interfaccia **usabile** e graficamente curata.  
+- 📘 Documentare l’intero percorso tecnico come strumento di crescita personale.  
 
 ---
 
-## 🗂️ Struttura del progetto
+## 📂 Struttura del progetto
 
+```text
 KubeApp/
 ├─ index.html
 ├─ styles.css
 ├─ cube.js
 ├─ three.js
 ├─ upup.min.js
-├─ service-worker.js         # opzionale: se lo usi
+├─ service-worker.js        # opzionale: se usi SW standard
 ├─ manifest.webmanifest
+│
 ├─ icons/
 │  ├─ favicon.ico
 │  ├─ favicon-16x16.png
 │  ├─ favicon-32x32.png
 │  ├─ apple-touch-icon.png
 │  └─ meta-image.png
-├─ plugins/                  # se presenti
+│
+├─ plugins/                 # se presenti
 │  ├─ RoundedBoxGeometry.js
 │  └─ RoundedPlaneGeometry.js
+│
 ├─ README.md
 └─ readme.html
----
+```
 
-## 🧱 Tecnologie principali
+⸻
 
-- **three.js** — Rendering 3D del cubo e animazioni.  
-- **PWA** — Manifest, icone, supporto installazione, caching offline.  
-- **JavaScript + CSS** — UI minimale, controlli, timer e statistiche.  
-- **(Storico)** Algoritmo di risoluzione inizialmente sviluppato in **Python** (fondamento concettuale; poi semplificato/“addomesticato” per il gioco).
+🛠️ Tecnologie principali
+	•	🟦 three.js → Rendering 3D del cubo e animazioni.
+	•	📦 PWA → Manifest, icone, supporto installazione, caching offline.
+	•	💻 JavaScript + CSS → UI minimale, controlli, timer e statistiche.
+	•	🐍 Python (storico) → Algoritmo di risoluzione iniziale, poi “addomesticato” al gioco puro.
 
----
+⸻
 
-## 🕹️ Funzionalità
+✨ Funzionalità
+	•	🔄 Rotazione 3D interattiva con animazioni fluide.
+	•	📏 Dimensioni selezionabili (2×2, 3×3, 4×4, 5×5).
+	•	⏱️ Timer e statistiche integrate (miglior tempo, media, record).
+	•	🎨 Temi grafici multipli (Classico, Erno, Polvere, Camo, Pioggia).
+	•	🌈 Regolazioni per tonalità, saturazione e luminosità.
+	•	📥 Installazione come App Offline su desktop e mobile.
+	•	📖 Pannello guida interattiva per principianti.
 
-- **Cubo 3D** interattivo (doppio click per partire).  
-- **Preferenze**:
-  - Dimensioni: 2×2, 3×3, 4×4, 5×5
-  - Tipo di rotazione: Rapido, Morbido, Rimbalzo
-  - Lunghezza mischia: 20, 25, 30
-  - Angolo camera: Ortografica / Prospettica
-  - Temi colore: Classico, Erno, Polvere, Camo, Pioggia (più regolazioni fine HSL)
-- **Statistiche**: Miglior/Peggior tempo, medie (5/12/25).  
-- **Timer** e segnalazioni (completato, miglior tempo).  
-- **Modalità offline** (via UpUp *oppure* `service-worker.js`).  
-- **UI** responsiva e ottimizzata per dispositivi mobili.
+⸻
 
----
+📖 Storia del progetto
+	•	2016 → Punto di partenza: un regalo (il Cubo di Rubik) come stimolo dopo un problema di salute.
+	•	2017 → Primo algoritmo di risoluzione sviluppato in Python.
+	•	2018–2020 → Esperimenti grafici con librerie open source.
+	•	2021–2024 → Conversione verso il gioco, varianti di colore, dimensioni e stili.
+	•	2025 → Versione PWA stabile, caching, interfaccia curata e guida integrata.
 
-## 🧪 Storia & Fasi di sviluppo
+👉 Nota: online è possibile trovare grafiche simili, dovute all’uso di librerie 3D pubbliche.
+Il progetto, però, è stato adattato e personalizzato negli anni, diventando un vero percorso di crescita nel coding.
 
-- **2017 — Origini**  
-  Prime scene 3D, studio delle notazioni (R, U, L, D, F, B), mockup UI.
+⸻
 
-- **2018–2019 — Algoritmo**  
-  Prototipo in **Python** per la risoluzione. Base logica per successivi adattamenti “giocosi”.
+🚀 Aggiornamenti futuri
+	•	📱 Miglioramento interfaccia per dispositivi mobili.
+	•	🏁 Modalità di gioco aggiuntive (es. sfide a tempo).
+	•	🔊 Integrazione di suoni e feedback aptici.
+	•	🧮 Supporto a varianti del cubo (es. Megaminx).
 
-- **2020–2021 — Grafica**  
-  Ricerca di **soluzioni grafiche open** (geometrie arrotondate, materiali), blend fra estetica e prestazioni.
+⸻
 
-- **2022–2023 — PWA**  
-  Manifest, icone, caching offline. UI per timer, statistiche, preferenze.
+ℹ️ Note personali
 
-- **2024 — Ottimizzazioni**  
-  Performance su mobile, rifiniture animazioni, pulizia del codice.
+Io il Cubo non lo so risolvere.
+Ed è proprio per questo che ho iniziato a scrivere codice: prima un algoritmo in Python, poi una simulazione “addomesticata” al puro gioco.
+Molti suggerimenti e modifiche sono arrivati dagli appassionati online: colori, dimensioni e piccoli dettagli che hanno reso il progetto più vivo.
 
-- **2025 — Consolidamento**  
-  Revisione interfaccia, testo guida per principianti, pulizia asset, miglioramenti accessibilità.
+⸻
 
-> **Nota personale**: *“Io il Cubo non lo so risolvere.*  
-> *Per questo ho sviluppato prima un algoritmo in Python e poi l’ho trasformato in gioco, anche grazie ai suggerimenti di appassionati online su colori, dimensioni e piccoli dettagli.”*
+📌 Crediti & Licenza
+	•	👨‍💻 Autore: Alessandro Pezzali
+	•	📅 Anni di sviluppo: 2017–2025
+	•	⚖️ Licenza: Tutti i diritti riservati
 
----
+© 2025 Alessandro Pezzali. Tutti i diritti riservati.
+Il software, i contenuti e gli asset grafici sono concessi in uso personale agli utenti finali, senza trasferimento di diritti.
 
-## ⚙️ Installazione & Avvio (dev)
+Non è consentito, senza autorizzazione scritta:
+	•	❌ Copiare, modificare, distribuire o pubblicare il codice.
+	•	❌ Utilizzare il progetto (o derivati) a fini commerciali.
+	•	❌ Eseguire reverse engineering o rimuovere/alterare note di copyright.
 
-- **Prerequisiti**: un server statico (anche `npx serve`, `python -m http.server`, estensioni tipo “Live Server”).  
-- **Avvio locale**:
-  1. Clona/copialo in una directory servita da HTTP/HTTPS.
-  2. Apri `https://localhost:…/KubeApp/` (o il tuo host).
-  3. Per funzioni PWA e caching è **consigliato HTTPS**.
-- **Cache busting**: aggiorna `window.gameVersion` in `index.html` quando cambi asset.
-
----
-
-## 📦 PWA & Offline
-
-Sono supportati **due approcci** (scegline **uno**):
-
-1. **UpUp** (`upup.min.js` + `UpUp.start(...)`)  
-   - Semplice da integrare, già cablato in `index.html`.  
-   - Richiede **HTTPS**.
-
-2. **Service Worker standard** (`service-worker.js`)  
-   - Registralo da `index.html` (se non lo fai già) ad es.:
-     ```html
-     <script>
-       if ('serviceWorker' in navigator) {
-         window.addEventListener('load', () => {
-           navigator.serviceWorker.register('./service-worker.js');
-         });
-       }
-     </script>
-     ```
-   - Personalizza liste di asset, strategie di cache e politiche di aggiornamento.
-
-> Usa **solo uno** dei due metodi per evitare conflitti di caching.
-
----
-
-## 🧭 Accessibilità & UX
-
-- Testato su viewport piccoli e grandi.  
-- Contrasti e dimensioni carattere pensati per leggibilità.  
-- Guida in-app per principianti, apribile con il pulsante “?”.
-
----
-
-## 🧩 Icone incluse
-
-- `icons/apple-touch-icon.png`  
-- `icons/favicon-16x16.png`  
-- `icons/favicon-32x32.png`  
-- `icons/favicon.ico`  
-- `icons/meta-image.png` (per Open Graph / social)
-
----
-
-## 🗺️ Roadmap (idee future)
-
-- Modalità **allenamento** con step-by-step e suggerimenti.  
-- Esportazione risultati e cronologia.  
-- Miglior compatibilità iOS/Safari e miglioramento gesture.  
-- Aggiornamento librerie 3D e rifiniture UI.
-
----
-
-## 📝 Changelog (estratto)
-
-- **0.0.2**  
-  - Testi guida integrati; ritocchi UI; footer informativo.  
-  - Migliorie accessibilità e minori fix.
-
-- **0.0.1**  
-  - Prima build pubblica di test (Windows/macOS).  
-  - PWA base + caching (UpUp) + set icone.
-
----
-
-## 🙌 Riconoscimenti
-
-- **three.js** e community 3D per spunti e tecniche.  
-- Geometrie e idee UI ispirate anche a componenti e snippet **pubblici** diffusi nella community (da cui la somiglianza di alcune soluzioni grafiche).  
-- Appassionati del web per feedback su colori, dimensioni e interazioni.
-
----
-
-## ⚖️ Licenza d’Uso (Tutti i diritti riservati)
-
-**© 2025 Alessandro Pezzali. Tutti i diritti riservati.**  
-Il software, i contenuti e gli asset grafici sono concessi in **uso** agli utenti finali **senza** trasferimento di diritti.
-
-**Non è consentito**, senza **autorizzazione scritta** dell’autore:  
-- Copiare, modificare, distribuire, pubblicare o **redistribuire** il codice o parti di esso.  
-- Utilizzare il progetto (o derivati) a scopo **commerciale**.  
-- Eseguire **reverse engineering** o rimuovere/alterare note di copyright.  
-
-È consentito l’uso **personale** per giocare e testare l’app.  
-Per richieste specifiche: contatti di seguito.
-
----
-
-## 📫 Contatti
-
-- Sito: **pezzalAPP.com**  
-- Autore: **Alessandro Pezzali**  
-- Progetto: **Il Cubo di Rubik PWA**
+👉 È consentito l’uso personale per giocare e testare l’app.
+Per richieste specifiche: 🌐 pezzaliAPP.com
