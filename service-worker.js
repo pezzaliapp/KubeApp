@@ -1,5 +1,5 @@
-// service-worker.js
-const CACHE_VERSION = "kubeapp-v001";
+// service-worker.js — KubeApp v0.0.2 + GA safe
+const CACHE_VERSION = "kubeapp-v002";  // bump versione cache
 const APP_SHELL = [
   "./",
   "./index.html",
@@ -32,13 +32,21 @@ self.addEventListener("activate", (event) => {
   self.clients.claim();
 });
 
-// Strategia: HTML -> network-first; statici -> cache-first con fallback rete
 self.addEventListener("fetch", (event) => {
   const req = event.request;
+  const url = new URL(req.url);
+
+  // 1) NON intercettare richieste esterne (Analytics, CDN, ecc.)
+  if (url.origin !== self.location.origin) {
+    // niente respondWith ⇒ il browser fa la fetch normale
+    return;
+  }
+
   const isHTML =
     req.mode === "navigate" ||
     (req.headers.get("accept") || "").includes("text/html");
 
+  // 2) HTML: network-first con fallback cache (index offline)
   if (isHTML) {
     event.respondWith(
       fetch(req)
@@ -52,13 +60,14 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
-  // statici (script, style, img, font…)
+  // 3) Statici (script, css, immagini…): cache-first con fallback rete
   event.respondWith(
     caches.match(req).then((cached) => {
       if (cached) return cached;
       return fetch(req).then((res) => {
-        // evita di mettere in cache richieste non validhe
-        if (!res || res.status !== 200 || res.type === "opaque") return res;
+        if (!res || res.status !== 200 || res.type === "opaque") {
+          return res;
+        }
         const copy = res.clone();
         caches.open(CACHE_VERSION).then((c) => c.put(req, copy));
         return res;
