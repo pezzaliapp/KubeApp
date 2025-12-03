@@ -39,6 +39,18 @@
     a{color:var(--brand); text-decoration:none} a:hover{text-decoration:underline}
     .lead{margin-top:.25rem;color:var(--muted);text-align:center}
   </style>
+  <!-- Google tag (gtag.js) – KubeApp -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-KLGK05W60D"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){ dataLayer.push(arguments); }
+  gtag('js', new Date());
+
+  // Configurazione per tracciare correttamente la pagina
+  gtag('config', 'G-KLGK05W60D', {
+    page_path: location.pathname + location.search + location.hash
+  });
+</script>
 </head>
 <body>
   <div class="container">
