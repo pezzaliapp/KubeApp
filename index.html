@@ -83,6 +83,18 @@ Licenza d’Uso — Il Cubo di Rubik PWA
   </style>
   <!-- Manifest PWA -->
 <link rel="manifest" href="manifest.webmanifest" />
+  <!-- Google tag (gtag.js) – KubeApp -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-KLGK05W60D"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){ dataLayer.push(arguments); }
+  gtag('js', new Date());
+
+  // Configurazione per tracciare correttamente la pagina
+  gtag('config', 'G-KLGK05W60D', {
+    page_path: location.pathname + location.search + location.hash
+  });
+</script>
 </head>
 <body>
 
